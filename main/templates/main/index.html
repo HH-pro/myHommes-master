@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+
+<!-- Main Slider With Form -->
+<section class="osahan-slider">
+
+    <div id="osahanslider" class="carousel slide" data-ride="carousel">
+       <ol class="carousel-indicators">
+          <li data-target="#osahanslider" data-slide-to="0" class="active"></li>
+          <li data-target="#osahanslider" data-slide-to="1"></li>
+          <li data-target="#osahanslider" data-slide-to="2"></li>
+
+       </ol>
+
+       <div class="carousel-inner" role="listbox">
+          <div class="carousel-item active" style="background-image: url({% static 'images/2.jpg' %});"><div class="overlay"></div></div>
+          <div class="carousel-item" style="background-image: url({% static 'images/2.jpg' %});"><div class="overlay"></div></div>
+          <div class="carousel-item" style="background-image: url({% static 'images/2.jpg' %});" ><div class="overlay"></div></div>
+       </div>
+       <a class="carousel-control-prev" href="#osahanslider" role="button" data-slide="prev">
+       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+       <span class="sr-only">Previous</span>
+       </a>
+       <a class="carousel-control-next" href="#osahanslider" role="button" data-slide="next">
+       <span class="carousel-control-next-icon" aria-hidden="true"></span>
+       <span class="sr-only">Next</span>
+       </a>
+    </div>
+    {% include 'search/snippet/search_form.html' %}
+ </section>
+ <!-- End Main Slider With Form -->
+ <!-- Properties List -->
+ <section class="section-padding">
+    <div class="section-title text-center mb-5">
+       <h2>Latest Properties</h2>
+       <p>.</p>
+    </div>
+    <div class="container">
+       <div class="row">
+
+            {% if featured_property %}
+
+                  {% for property in featured_property|slice:":7"  %}
+
+                        {% include 'property/snippet/property_card.html' with instance=property %}
+
+
+                  {% endfor %}
+                            {% endif %}
+
+
+       </div>
+    </div>
+    <div class="row mt-4">
+            <div class="col-md-12 text-center">
+               <a class="btn btn-success" href="{% url 'property:list' %}">VIEW ALL</a>
+            </div>
+      </div>
+ </section>
+ <!-- End Properties List -->
+ <!-- Properties by City -->
+
+<!-- <section class="section-padding bg-white">-->
+<!--      <div class="section-title text-center mb-5">-->
+<!--         <h2>Property By Cities</h2>-->
+<!--         &lt;!&ndash; <p>List of Properties in your favorite city.</p> &ndash;&gt;-->
+<!--      </div>-->
+<!--      <div class="container">-->
+<!--              <div class="row">-->
+<!--                    {% if cities %}-->
+
+<!--                          {% for city in cities %}-->
+
+<!--                                {% include 'main/snippet/city_card.html' with instance=city %}-->
+
+
+<!--                          {% endfor %}-->
+<!--                    {% endif %}-->
+
+<!--              </div>-->
+
+<!--      </div>-->
+<!--   </section>-->
+
+ <!-- End Blog -->
+ <!-- Join Team -->
+ <section class="section-padding bg-dark text-center">
+    <h2 class="text-white mt-0">Join our professional team & agents<br>to start Renting your house</h2>
+     <a href="{% url 'main:contact' %}"><button type="button" class="btn btn-success">Contact Us</button></a> <button type="button" class="btn btn-outline-success">Read More</button>
+ </section>
+ <!-- End Join Team -->
+
+{% endblock %}

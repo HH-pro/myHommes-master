@@ -1,0 +1,68 @@
+
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+   {% block style %}
+       <link href='{% static "css/contact.css" %}' rel="stylesheet">
+   {% endblock %}
+
+{% block content %}
+        <!-- Inner Header -->
+        <section class="section-padding bg-dark inner-header" style="background-image: url({% static 'images/city_view.jpg' %})">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1 class="mt-0 mb-3 text-white">Contact Us</h1>
+                        <div class="breadcrumbs">
+                            <p class="mb-0 text-white"><a class="text-white" href="/">Home</a>  /  <span class="text-success">Contact
+                                    Us</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Inner Header -->
+        
+        
+        
+        <!-- Contact Us -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <h3 class="mt-1 mb-5">Get In Touch</h3>
+
+                        <h6 class="text-dark"><i class="mdi mdi-deskphone"></i> Mobile :</h6>
+                        <p>07716940358</p>
+
+                        <h6 class="text-dark"><i class="mdi mdi-email"></i> Email :</h6>
+                        <p>info@nzblimited.uk</p>
+
+
+
+                    </div>
+                    <div class="col-lg-8 col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Contact Us -->
+
+
+        <section class="section-padding bg-dark text-center">
+            <h2 class="text-white mt-0">In-House Maintenance</h2>
+            <p class="text-white mb-4">Broken boiler? Leak in the kitchen?<br> Light switch not working? The Property Company has their
+own in-house maintenance team for all eventualities.</p>
+            <button type="button" class="btn btn-success">Contact Us</button> <button type="button" class="btn btn-outline-success">Read
+                More</button>
+        </section>
+        <!-- End Join Team -->
+{% endblock %}
