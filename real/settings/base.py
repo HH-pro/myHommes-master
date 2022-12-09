@@ -25,7 +25,7 @@ SECRET_KEY = 'ro@2i^6v+6xm_@9)#^9dt*k%!!7bm%$o^9xvk$i&p+%1jj8_1q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','sampledomain.com']
+ALLOWED_HOSTS = ['.vercel.app','.now.sh']
 
 # Application definition
 
@@ -150,7 +150,6 @@ STATIC_ROOT =  os.path.join(os.path.dirname(BASE_DIR), "static_cdn","static_root
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 
 
