@@ -1,8 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from django.db.models import Prefetch
 from django.forms import modelformset_factory, inlineformset_factory
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.core.mail import send_mail
 # Create your views here.
 from django.shortcuts import render, redirect, reverse
 import random
