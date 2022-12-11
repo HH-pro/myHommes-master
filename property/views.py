@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 # Create your views here.
 from django.shortcuts import render, redirect, reverse
 import random
-from .models import Property, PropertyRating, MyProperty, Neighborhood, City, Category, Images
+from .models import Property, PropertyRating, MyProperty, City, Category, Images
 from .mixins import PropertyManagerMixin
 from django.db.models import Count
 from django.views.generic import View
@@ -258,15 +258,12 @@ def get_city(request, slug, **kwargs):
     except EmptyPage:
         city_property = paginator.page(paginator.num_pages)
 
-    neigborhood_name = Neighborhood.objects.filter(city__slug=slug).annotate(num_property=Count("property")).order_by(
-        "-num_property")
     property_type = Category.objects.all()
     city_name = City.objects.get(slug=slug)
 
     featured = list(Property.objects.filter(featured=True, city__slug=slug))
     shuffle(featured)
     context = {'city_property': city_property,
-               'neigborhood_name': neigborhood_name,
                'property_type': property_type,
                'featured': featured,
                'city_name': city_name
@@ -287,11 +284,8 @@ def get_neighborhood(request, slug, neighborhood_slug):
     except EmptyPage:
         neighborhood_property = paginator.page(paginator.num_pages)
 
-    city_neigborhoods = Neighborhood.objects.filter(city__slug=slug).exclude(slug=neighborhood_slug).annotate(
-        num_property=Count("property")).order_by("-num_property")
     featured = list(Property.objects.filter(featured=True, city__slug=slug, neighborhood__slug=neighborhood_slug))
     property_type = Category.objects.filter()
-    neigborhood_name = Neighborhood.objects.get(city__slug=slug, slug=neighborhood_slug)
     # city =  city_name = City.objects.filter(slug=slug)[:1]
 
     shuffle(featured)
@@ -299,10 +293,8 @@ def get_neighborhood(request, slug, neighborhood_slug):
     city = City.objects.get(slug=slug)
     context = {
         'neighborhood_property': neighborhood_property,
-        'city_neigborhoods': city_neigborhoods,
         'property_type': property_type,
         'featured': featured,
-        'neigborhood_name': neigborhood_name,
         'city': city
     }
     return render(request, 'property/property_neighborhood_detail.html', context)

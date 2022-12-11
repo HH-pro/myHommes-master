@@ -70,55 +70,12 @@ pre_save.connect(city_pre_save_receiver, sender=City)
 
 
 class CityImage(models.Model):
-    city = models.ForeignKey(City, related_name='images', default='name',on_delete=models.CASCADE)
+    city = models.ForeignKey(City, related_name='images', default='name',on_delete = models.DO_NOTHING)
     image = models.ImageField(upload_to='city/', null=True, blank=True)
 
     def __str__(self):
         return self.city
 
-
-
-# neighborhood
-class Neighborhood(models.Model):
-    title        = models.CharField(max_length=120, blank=True, unique=True)
-    image        = models.ImageField(upload_to='properties/', null=True, blank=True)
-    slug         = models.SlugField(blank=True,unique=True)
-    city         = models.ForeignKey(City,blank=True, default=1, max_length=300, unique=False, on_delete=models.CASCADE)
-
-
-    def get_neighborhood_url(self):
-        return reverse("property:neighborhood", kwargs={"slug": self.city,"neighborhood_slug": self.slug})
-
-    # def class_name(self):
-    #     return self.__class__.__name__
-
-    def __str__(self):
-        return self.slug
-    
-    
-   
-    
-    
-    def get_property(self):
-        return property.objects.filter(neighborhood__title = self.title)
-
-    class Meta:
-        verbose_name = 'Neighborhood'
-        verbose_name_plural = 'Neighborhoods'
-
-
-def neighborhood_pre_save_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
-
-pre_save.connect(neighborhood_pre_save_receiver, sender=Neighborhood)
-
-class NeighborhoodImage(models.Model):
-    neighborhood = models.ForeignKey(Neighborhood, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='neigborhood/', null=True, blank=True)
-
-    def __str__(self):
-        return self.neighborhood
 
 class Category(models.Model):
     title        = models.CharField(max_length=120, blank=True, unique=True)
@@ -129,8 +86,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.slug
-    
-    
+
+
     def get_property(self):
         return property.objects.filter(category__title = self.title)
 
@@ -226,7 +183,7 @@ DURATION = (
     ('Year', 'Year'),
     ('2 Years', '2 Years'),
     ('3 Years', '3 Years'),
-    
+
 )
 
 BATHROOM = (
@@ -244,18 +201,18 @@ PURPOSE = (
     ('Other', 'Other'),
 )
 
-
 class Property(models.Model):
     # realtor = models.ForeignKey(User, related_name='property')
-    realtor = models.ForeignKey(Realtor, on_delete=models.CASCADE)
+    realtor = models.ForeignKey(Realtor, on_delete = models.DO_NOTHING
+)
     title = models.CharField(max_length=120)
     slug = models.SlugField(blank=True, unique=True)
     address = models.CharField(blank=True, max_length=300)
-    # city = models.ForeignKey(City,blank=True, default="", max_length=300, unique=False, on_delete=models.CASCADE)
     storey = models.CharField(_('storey'), blank=True, max_length=300,
                               choices=STOREY, unique=False)
 
-    category = models.ForeignKey(Category, default="", max_length=300, unique=False, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, default="", max_length=300, unique=False, on_delete = models.DO_NOTHING
+)
 
     bedroom = models.CharField(_('bed'), max_length=300,
                                choices=BEDROOM, unique=False)
@@ -308,7 +265,8 @@ class Property(models.Model):
 
 
 class Images(models.Model):
-    property = models.ForeignKey(Property, related_name='images', on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, related_name='images', on_delete = models.DO_NOTHING
+)
     image = models.ImageField(upload_to='properties/', null=True, blank=True)
 
     class Meta:

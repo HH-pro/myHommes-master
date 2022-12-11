@@ -8,11 +8,6 @@ from django.urls import reverse
 
 
 
-
-
-
-
-
 class Realtor(models.Model):
     user = models.OneToOneField(User)
     city = models.ForeignKey('property.City', default=1)
@@ -33,7 +28,3 @@ class Realtor(models.Model):
     def get_realtor_url(self):
         return reverse("realtor:realtor-detail", kwargs={"pk":self.pk})
 
-# def realtor_profile(sender, **kwargs):
-#     if kwargs['created']:
-#         user_profile = Realtor.objects.create(user=kwargs['realtor'])
-# post_save.connect(realtor_profile,sender=User)
