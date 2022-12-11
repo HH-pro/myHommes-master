@@ -9,8 +9,6 @@ import random
 from .models import Property, PropertyRating, MyProperty, Neighborhood, City, Category, Images
 from .mixins import PropertyManagerMixin
 from django.db.models import Count
-from tag.models import Tag
-from analytics.models import TagView
 from django.views.generic import View
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -123,13 +121,6 @@ class PropertyCreateView(RealtorAccountMixin, SubmitBtnMixin, CreateView):
             realtor = self.get_account()
             property.realtor = realtor
             property.save()
-            if tag:
-                tag_list = tag.split(",")
-                for tag in tag_list:
-                    if not tag == "":
-                        new_tag = Tag.objects.get_or_create(title=str(tag).strip())[0]
-                        new_tag.save()
-                        new_tag.property.add(form.instance or None)
 
             if formset.is_valid():
                 for f in formset:
@@ -173,13 +164,6 @@ class PropertyUpdateView(PropertyManagerMixin, SubmitBtnMixin, MultiSlugMixin, U
             property.save()
             obj = self.get_object()
             obj.tag_set.clear()
-            if tag:
-                tag_list = tag.split(",")
-                for tag in tag_list:
-                    if not tag == "":
-                        new_tag = Tag.objects.get_or_create(title=str(tag).strip())[0]
-                        new_tag.save()
-                        new_tag.property.add(form.instance or None)
 
             if formset.is_valid():
                 formset.save()
@@ -224,16 +208,6 @@ class PropertyDetailSlugView(DetailView):
         context = super(PropertyDetailSlugView, self).get_context_data(*args, **kwargs)
         slug = self.kwargs.get('slug')
         obj = self.get_object()
-        tags = obj.tag_set.all()
-        if self.request.user.is_authenticated():
-            for tag in tags:
-                new_view = TagView.objects.add_count(self.request.user, tag)
-
-        # featured = list(Property.objects.filter(featured=True, city__slug=slug))
-
-        # shuffle(featured)
-
-        # context['featured'] = featured
         return context
 
 
